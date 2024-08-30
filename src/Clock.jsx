@@ -10,12 +10,11 @@ const WorldClock = () => {
         const fetchTime = async () => {
             try {
                 console.log('Запрос отправляется...');
-                const response = await axios.get(
-                    'http://worldtimeapi.org/api/timezone/Europe/Samara',
-                );
-                const datatime = response.data.datetime;
+                const response = await axios.get('http://worldtimeapi.org/api/timezone/Etc/UTC');
+                console.log('ответ: ', response)
+                const datetime = response.data.datetime;
 
-                setTime(new Date(datatime).toLocaleTimeString());
+                setTime(new Date(datetime).toLocaleTimeString([], { hour:'2-digit', minute: '2-digit'}));
                 setLoading(false);
             } catch (error) {
                 console.error('Нет данных с сервера', error);
@@ -23,16 +22,15 @@ const WorldClock = () => {
             }
         };
         fetchTime();
-        const intervalId = setInterval(fetchTime, 60000);
+        const intervalId = setInterval(fetchTime, 20000);
         return () => clearInterval(intervalId);
     }, []);
+
+    return (
+        <div className={'clock-container'}>
+            {loading ? <div>Загрузка...</div> : <div className="clock">{time}</div>}
+        </div>
+    );
 };
 
-return (
-    <body>
-        <div className={'clock-container'}>
-            <div className={'clock'}>{time}</div>
-        </div>
-    </body>
-);
 export default WorldClock;
