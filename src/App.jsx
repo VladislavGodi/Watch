@@ -1,14 +1,13 @@
 import './App.css';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import WorldClock from './Clock';
 
 function App() {
     return (
-        <body>
-            <div className={'clock-container'}>
-                <div className={'clock'}>12:32</div>
-            </div>
-        </body>
+        <div>
+            <Clock />
+        </div>
     );
 }
 
